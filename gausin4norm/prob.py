@@ -8,7 +8,6 @@ from scipy.stats import expon
 from scipy.stats import gamma
 
 
-# 设定随机种子，确保结果可复现
 torch.manual_seed(1234)
 np.random.seed(1234)
 
@@ -25,7 +24,7 @@ class Gausin(nn.Module):
         return -torch.sin(x) * torch.exp((-x * x) / 2)
 
 
-# 神经网络定义
+
 class NN(nn.Module):
     def __init__(self, input_size=1, hidden_size=16):
         super(NN, self).__init__()
@@ -74,7 +73,7 @@ model = NN()
 optimizer = optim.Adam(model.parameters(), lr=0.001)
 criterion = nn.MSELoss()
 
-# 训练神经网络
+
 epochs = 8000
 with open("prob_rl2_4.100_gaus.txt", "w") as log_file:
     log_file.write("l2\n")
@@ -93,7 +92,7 @@ with open("prob_rl2_4.100_gaus.txt", "w") as log_file:
             log_file.write(f"{rl2}\n")
             print(f"Epoch [{epoch}/{epochs}], l2: {rl2:6f}")
 
-# 训练完毕后，绘制结果
+
 model.eval()
 
 y_pred_test = model(x_test).detach().numpy()
